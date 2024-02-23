@@ -1,4 +1,4 @@
-﻿$Title="Установка Прав Администратора  (автор Barlog Udun)"
+﻿$Title="Установка Прав Администратора (автор Barlog Udun)"
 $EnterPause="Жмите Enter......................"
 $host.UI.RawUI.WindowTitle = $Title
 Write-Host -----------------------$Title-----------------------
