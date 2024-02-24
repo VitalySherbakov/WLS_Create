@@ -6,6 +6,7 @@ while ($true) {
     Write-Host "4) Список Доступных Дистрибутивов WLS"
 	Write-Host "5) Установка Дистрибутива WLS"
 	Write-Host "6) Список Команд для Linex"
+	Write-Host "7) Войти в Дистрибутив"
     $command= Read-Host "Выбрать Номер: "
 	if ($command -eq 1) {
         dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
@@ -30,15 +31,43 @@ while ($true) {
 	if ($command -eq 6) {
         Write-Host "Получить Полный Доступ Выполнять Команды: sudo su"
 		Write-Host "Обновление пакетов в дистрибутиве: sudo apt update -y"
+		$script="wsl -u root sudo apt upgrade -y"
 		Write-Host "Обновление пакетов в дистрибутиве: sudo apt upgrade -y"
+		$script2="wsl -u root sudo apt upgrade -y"
 		Write-Host "Установка текстового редактора Гнома: sudo apt install gnome-text-editor -y"
+		$script3="wsl -u root sudo apt install gnome-text-editor -y"
 		Write-Host "Установка GIMP: sudo apt install gimp -y"
+		$script4="wsl -u root sudo apt install gimp -y"
 		Write-Host "Установка Nautilus: sudo apt install nautilus -y"
+		$script5="wsl -u root sudo apt install nautilus -y"
 		Write-Host "Установка VLC: sudo apt install vlc -y"
+		$script6="wsl -u root sudo apt install vlc -y"
 		Write-Host "Установка приложений X11: sudo apt install x11-apps -y"
+		$script7="wsl -u root sudo apt install x11-apps -y"
 		Write-Host "Установка Google Chrome для Linux 1: cd /tmp"
+		$script8="wsl -u root cd /tmp"
 		Write-Host "Установка Google Chrome для Linux 2: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+		$script9="wsl -u root wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 		Write-Host "Установка Google Chrome для Linux 3: sudo apt install --fix-missing ./google-chrome-stable_current_amd64.deb"
+		$script10="wsl -u root sudo apt install --fix-missing ./google-chrome-stable_current_amd64.deb -y"
 		Write-Host "Установка Google Chrome для Linux Запуск: google-chrome"
+		$script11="wsl -u root google-chrome"
+		# Выход из WLS
+		$script12="wsl -u root exit"
+		Invoke-Expression $script
+		Invoke-Expression $script2
+		Invoke-Expression $script3
+		Invoke-Expression $script4
+		Invoke-Expression $script5
+		Invoke-Expression $script6
+		Invoke-Expression $script7
+		Invoke-Expression $script8
+		Invoke-Expression $script9
+		Invoke-Expression $script10
+		Invoke-Expression $script11
+		Invoke-Expression $script12
+    }
+	if ($command -eq 7) {
+        wsl -u root
     }
 }
