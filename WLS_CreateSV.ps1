@@ -10,6 +10,7 @@ while ($true) {
 	Write-Host "8) Список Команд для Linex"
 	Write-Host "9) Войти в Дистрибутив"
 	Write-Host "10) Удалить Дистрибутив Тикущий"
+	Write-Host "11) Выход из Скрипта (или Ctrl+C)"
     $command= Read-Host "Выбрать Номер: "
 	if ($command -eq 1) {
 		Write-Host "-----------------------------------------------"
@@ -18,6 +19,8 @@ while ($true) {
 		Invoke-Expression $script
 		$script1="wsl -u root lsb_release -a"
 		Invoke-Expression $script1
+		$script2="wsl -u root hostname -I"
+		Invoke-Expression $script2
     }
 	if ($command -eq 2) {
 		Write-Host "-----------------------------------------------"
@@ -92,13 +95,28 @@ while ($true) {
     }
 	if ($command -eq 9) {
 		Write-Host "-----------------------------------------------"
-        wsl -u root
+		Write-Host "Команда в Систему: cd ~"
+		Write-Host "Команда в Систему: cd /home/<Имя Пользователя>"
+		Write-Host "Команда Вернуться Назад: cd .."
+		Write-Host "Команда Полный Доступ: sudo chmod 777 /home"
+		Write-Host "Команда Содержымое: ls"
+		Write-Host "Команда Windows Каталога (C:): cd mnt/c"
+        #wsl -u root
+		$scriptchmod = "wsl -u root chmod 777 /home"
+		Invoke-Expression $scriptchmod
+		$script = "wsl -u root sudo su"
+		# Выполняем скрипт
+		Invoke-Expression $script
     }
 	if ($command -eq 10) {
 		Write-Host "-----------------------------------------------"
         wsl -l
 		$distributive= Read-Host "Выбрать Дистрибутив: "
 		wsl --unregister $distributive
+    }
+	if ($command -eq 11) {
+		Write-Host "-----------------------------------------------"
+        break  # Прерываем выполнение цикла
     }
 	$pause= Read-Host "---------------------Enter---------------------"
 }
