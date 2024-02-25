@@ -1,34 +1,57 @@
 # Пример бесконечного цикла
 while ($true) {
-    Write-Host "1) Установка WLS (Будет Перезагрузка Компютера)"
-	Write-Host "2) Обновление WLS"
-	Write-Host "3) Установка WLS (Автоматически Установит Ubuntu)"
-    Write-Host "4) Список Доступных Дистрибутивов WLS"
-	Write-Host "5) Установка Дистрибутива WLS"
-	Write-Host "6) Список Команд для Linex"
-	Write-Host "7) Войти в Дистрибутив"
+	Write-Host "1) Версия Тикущего Дестрибутива"
+    Write-Host "2) Установка WLS (Будет Перезагрузка Компютера)"
+	Write-Host "3) Обновление WLS"
+	Write-Host "4) Список Доступных Дистрибутивов WLS"
+	Write-Host "5) Список Установленых Дистрибутивов WLS"
+	Write-Host "6) Установка WLS (Автоматически Установит Ubuntu)"
+	Write-Host "7) Установка Дистрибутива WLS"
+	Write-Host "8) Список Команд для Linex"
+	Write-Host "9) Войти в Дистрибутив"
+	Write-Host "10) Удалить Дистрибутив Тикущий"
     $command= Read-Host "Выбрать Номер: "
 	if ($command -eq 1) {
+		Write-Host "-----------------------------------------------"
+        wsl -l
+		$script="wsl -u root uname -a"
+		Invoke-Expression $script
+		$script1="wsl -u root lsb_release -a"
+		Invoke-Expression $script1
+    }
+	if ($command -eq 2) {
+		Write-Host "-----------------------------------------------"
         dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 		dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 		wsl.exe --set-default-version 2
 		Restart-Computer
 		Write-Host "Перезагрузка Компютера..."
     }
-	if ($command -eq 2) {
+	if ($command -eq 3) {
+		Write-Host "-----------------------------------------------"
         wsl --update
 		wsl --shutdown
     }
-    if ($command -eq 3) {
-        wsl --install
-    }
-    if ($command -eq 4) {
+	if ($command -eq 4) {
+		Write-Host "-----------------------------------------------"
         wsl --list --online
     }
 	if ($command -eq 5) {
-        wsl --list --online
+		Write-Host "-----------------------------------------------"
+        wsl -l
     }
-	if ($command -eq 6) {
+    if ($command -eq 6) {
+		Write-Host "-----------------------------------------------"
+        wsl --install
+    }  
+	if ($command -eq 7) {
+		Write-Host "-----------------------------------------------"
+        wsl --list --online
+		$distributive= Read-Host "Выбрать Дистрибутив: "
+		wsl.exe --install $distributive
+    }
+	if ($command -eq 8) {
+		Write-Host "-----------------------------------------------"
         Write-Host "Получить Полный Доступ Выполнять Команды: sudo su"
 		Write-Host "Обновление пакетов в дистрибутиве: sudo apt update -y"
 		$script="wsl -u root sudo apt upgrade -y"
@@ -67,7 +90,15 @@ while ($true) {
 		Invoke-Expression $script11
 		Invoke-Expression $script12
     }
-	if ($command -eq 7) {
+	if ($command -eq 9) {
+		Write-Host "-----------------------------------------------"
         wsl -u root
     }
+	if ($command -eq 10) {
+		Write-Host "-----------------------------------------------"
+        wsl -l
+		$distributive= Read-Host "Выбрать Дистрибутив: "
+		wsl --unregister $distributive
+    }
+	$pause= Read-Host "---------------------Enter---------------------"
 }
